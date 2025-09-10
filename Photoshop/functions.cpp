@@ -83,6 +83,18 @@ QImage quantization(int n, QImage image) {
     return image;
 }
 
+bool saveFile(QString name, QImage image) {
+
+    QString path = "/Users/pedro/Documents/UFRGS/Semestre_4/FPI/Photoshop_FPI/images/" + name + ".jpg";
+
+    bool success = image.save(path);
+
+    if (success) cout << "Salvou de boa" << endl;
+    else cout << "DEu merda go back" << endl;
+
+    return success;
+}
+
 
 
 

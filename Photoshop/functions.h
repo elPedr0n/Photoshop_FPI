@@ -11,4 +11,6 @@ QImage vertical_flip(QImage image);
 
 QImage quantization(int n, QImage image);
 
+bool saveFile(QString name, QImage image);
+
 #endif // FUNCTIONS_H

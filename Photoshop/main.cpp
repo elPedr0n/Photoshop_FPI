@@ -17,6 +17,10 @@ int main(int argc, char *argv[]) {
 
     image = quantization(12, image);
 
+    image = vertical_flip(image);
+
+    saveFile("saving", image);
+
     // Verifica se a imagem foi carregada com sucesso
     if (image.isNull()) {
         imageLabel.setText("Erro ao carregar a imagem.");
