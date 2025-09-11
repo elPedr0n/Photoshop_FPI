@@ -1,5 +1,7 @@
 #include "config.h"
 
+int tons = 255;
+
 QImage grayscale(QImage image) {
 
     int altura = image.height(), largura = image.width();
@@ -65,7 +67,7 @@ QImage quantization(int n, QImage image) {
     }
 
     int tam_int = max - 1 - min;
-    if (n < tam_int) {
+    if (n < tam_int && n < tons) {
 
         int tam_tom = tam_int / n;
 
@@ -80,6 +82,8 @@ QImage quantization(int n, QImage image) {
 
     }
 
+    tons = n;
+
     return image;
 }
 
@@ -88,9 +92,6 @@ bool saveFile(QString name, QImage image) {
     QString path = "/Users/pedro/Documents/UFRGS/Semestre_4/FPI/Photoshop_FPI/images/" + name + ".jpg";
 
     bool success = image.save(path);
-
-    if (success) cout << "Salvou de boa" << endl;
-    else cout << "DEu merda go back" << endl;
 
     return success;
 }

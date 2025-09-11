@@ -26,6 +26,16 @@ private slots:
 
     void on_load_image_clicked();
 
+    void on_grayscale_clicked();
+
+    void on_h_flip_clicked();
+
+    void on_v_flip_clicked();
+
+    void on_quantize_clicked();
+
+    void on_save_image_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
