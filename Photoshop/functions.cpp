@@ -1,6 +1,5 @@
 #include "config.h"
 
-int tons = 255;
 
 QImage grayscale(QImage image) {
 
@@ -51,7 +50,7 @@ QImage vertical_flip(QImage image) {
     return image;
 }
 
-QImage quantization(int n, QImage image) {
+QImage quantization(int n, QImage image, int *tons) {
 
     int altura = image.height(), largura = image.width();
     int min = 100000, max = -1;
@@ -67,7 +66,7 @@ QImage quantization(int n, QImage image) {
     }
 
     int tam_int = max - 1 - min;
-    if (n < tam_int && n < tons) {
+    if (n < tam_int && n < *tons) {
 
         int tam_tom = tam_int / n;
 
@@ -82,7 +81,7 @@ QImage quantization(int n, QImage image) {
 
     }
 
-    tons = n;
+    *tons = n;
 
     return image;
 }
@@ -96,8 +95,57 @@ bool saveFile(QString name, QImage image) {
     return success;
 }
 
+QImage rotate90CW(QImage image) {
+
+    int altura = image.height(), largura = image.width();
+    QImage temp(altura, largura, QImage::Format_ARGB32_Premultiplied);
+
+    for (int y = 0; y < altura; ++y) {
+        for (int x = 0; x < largura; ++x) {
+
+            QColor t = image.pixelColor(x, y);
+            temp.setPixelColor(altura - y - 1, x, t);
+
+        }
+    }
 
 
+    return temp;
+}
+
+QImage rotate90CCW(QImage image) {
+
+    int altura = image.height(), largura = image.width();
+    QImage temp(altura, largura, QImage::Format_ARGB32_Premultiplied);
+
+    for (int y = 0; y < altura; ++y) {
+        for (int x = 0; x < largura; ++x) {
+
+            QColor t = image.pixelColor(x, y);
+            temp.setPixelColor(y, largura - x - 1, t);
+
+        }
+    }
+
+    return temp;
+}
+
+
+QImage negativo(QImage image) {
+
+    int altura = image.height(), largura = image.width();
+
+    for (int y = 0; y < altura; ++y) {
+        for (int x = 0; x < largura; ++x) {
+
+            QColor t = image.pixelColor(x, y);
+            image.setPixel(x, y, qRgb(255 - t.red(), 255 - t.green(), 255 - t.blue()));
+
+        }
+    }
+
+    return image;
+}
 
 
 

@@ -9,8 +9,14 @@ QImage horizontal_flip(QImage image);
 
 QImage vertical_flip(QImage image);
 
-QImage quantization(int n, QImage image);
+QImage quantization(int n, QImage image, int *tons);
 
 bool saveFile(QString name, QImage image);
+
+QImage rotate90CW(QImage image);
+
+QImage rotate90CCW(QImage image);
+
+QImage negativo(QImage image);
 
 #endif // FUNCTIONS_H

@@ -13,7 +13,7 @@ using namespace std;
 #define PATH "/Users/pedro/Documents/UFRGS/Semestre_4/FPI/Photoshop_FPI/images/"
 
 extern bool copia, carregou;
-extern int tons;
+extern int tons_copia, tons_original;
 
 #include "mainwindow.h"
 
