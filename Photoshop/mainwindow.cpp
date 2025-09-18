@@ -40,6 +40,7 @@ void MainWindow::on_copy_clicked()
         tons_copia = 255;
         ui->imagem_copia->setStyleSheet("border: 2px solid #FFFF00;");
         ui->imagem_original->setStyleSheet("");
+        ui->imagem_copia->setAlignment(Qt::AlignCenter);
     }
 
 }
@@ -61,6 +62,7 @@ void MainWindow::on_load_image_clicked()
         tons_original = 255;
         ui->imagem_original->setStyleSheet("border: 2px solid #FFFF00;");
         ui->imagem_copia->setStyleSheet("");
+        ui->imagem_original->setAlignment(Qt::AlignCenter);
 
     }
 
