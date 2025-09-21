@@ -109,7 +109,8 @@ void MainWindow::on_v_flip_clicked()
     if (!copia && carregou) {
         QPixmap tmp = ui->imagem_original->pixmap();
         QImage image = tmp.toImage();
-        ui->imagem_original->setPixmap(QPixmap::fromImage(rotate90CW(image)));
+        image = grayscale(image);
+        ui->imagem_original->setPixmap(QPixmap::fromImage(equalizacao_cinza(image)));
     } else if (carregou) {
         QPixmap tmp = ui->imagem_copia->pixmap();
         QImage image = tmp.toImage();

@@ -19,4 +19,12 @@ QImage rotate90CCW(QImage image);
 
 QImage negativo(QImage image);
 
+vector<float> monta_histograma_gray(QImage image);
+
+vector<vector<float>> monta_histograma_colorido(QImage image);
+
+QImage muda_brilho(QImage image, int n);
+
+QImage equalizacao_cinza(QImage image);
+
 #endif // FUNCTIONS_H

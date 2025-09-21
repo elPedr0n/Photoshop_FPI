@@ -147,9 +147,154 @@ QImage negativo(QImage image) {
     return image;
 }
 
+vector<float> monta_histograma_gray(QImage image) {
+
+    vector<float> hist(256, 0);
+    int altura = image.height(), largura = image.width();
+
+    for (int y = 0; y < altura; ++y) {
+        for (int x = 0; x < largura; ++x) {
+
+            QColor t = image.pixelColor(x, y);
+            hist[t.red()]++;
+
+        }
+    }
+
+    for (int i = 0; i < 256; i++) {
+        hist[i] /= altura * largura;
+    }
+
+    return hist;
+
+}
+
+vector<vector<float>> monta_histograma_colorido(QImage image) {
+
+
+    vector<vector<float>> hist(3, vector<float>(256));
+    int altura = image.height(), largura = image.width();
+
+    for (int y = 0; y < altura; ++y) {
+        for (int x = 0; x < largura; ++x) {
+
+            QColor t = image.pixelColor(x, y);
+            hist[0][t.red()]++;
+            hist[1][t.green()]++;
+            hist[2][t.blue()]++;
+
+        }
+    }
+
+    for (int i = 0; i < 256; i++) {
+        hist[0][i] /= altura * largura;
+        hist[1][i] /= altura * largura;
+        hist[2][i] /= altura * largura;
+    }
+
+    return hist;
+
+}
+
+
+QImage muda_brilho(QImage image, int n) {
+
+
+    int altura = image.height(), largura = image.width();
+
+    for (int y = 0; y < altura; ++y) {
+        for (int x = 0; x < largura; ++x) {
+
+            int nr = 0, ng = 0, nb = 0;
+            QColor t = image.pixelColor(x, y);
+            nr = t.red() + n;
+            ng = t.green() + n;
+            nb = t.blue() + n;
+
+
+            if (nr > 255) nr = 255;
+            else if (nr < 0) nr = 0;
+
+            if (ng > 255) ng = 255;
+            else if (ng < 0) ng = 0;
+
+            if (nb > 255) nb = 255;
+            else if (nb < 0) nb = 0;
+
+            image.setPixelColor(x, y, qRgb(nr, ng, nb));
+
+        }
+    }
+
+
+    return image;
+}
+
+
+QImage muda_contraste(QImage image, float n) { //Falta testar isso aq
+
+    int altura = image.height(), largura = image.width();
+
+    for (int y = 0; y < altura; ++y) {
+        for (int x = 0; x < largura; ++x) {
+
+            int nr = 0, ng = 0, nb = 0;
+            QColor t = image.pixelColor(x, y);
+            nr = (int) (t.red() * n);
+            ng = (int) (t.green() * n);
+            nb = (int) (t.blue() * n);
+
+
+            if (nr > 255) nr = 255;
+            else if (nr < 0) nr = 0;
+
+            if (ng > 255) ng = 255;
+            else if (ng < 0) ng = 0;
+
+            if (nb > 255) nb = 255;
+            else if (nb < 0) nb = 0;
+
+            image.setPixelColor(x, y, qRgb(nr, ng, nb));
+
+        }
+    }
+
+
+    return image;
+}
+
+
+QImage equalizacao_cinza(QImage image) {
+
+    vector<float> hist(256), hist_cum(256);
+    int altura = image.height(), largura = image.width();
+    float alpha = 255.0 / (altura * largura);
+
+    // Multiplicando isso aq pq to renormalizando o valor de cada indice
+
+    hist = monta_histograma_gray(image);
+    hist_cum[0] = alpha * (hist[0] * altura * largura);
+
+    for (int i = 1; i < 256; i++) {
+        hist_cum[i] = hist_cum[i-1] + alpha * (hist[i] * altura * largura);
+        // cout << hist_cum[i] << ' ';
+    }
+    // cout << endl;
+
+    for (int y = 0; y < altura; ++y) {
+        for (int x = 0; x < largura; ++x) {
+
+            QColor t = image.pixelColor(x, y);
+            int valor = hist_cum[t.red()];
+            image.setPixelColor(x, y, qRgb(valor, valor, valor));
+
+        }
+    }
 
 
 
+    return image;
+}
 
 
 
