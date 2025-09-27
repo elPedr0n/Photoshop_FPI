@@ -33,4 +33,6 @@ QImage equalizacao_colorida(QImage image);
 
 QImage zoom_in(QImage image);
 
+QImage matching_histograma(QImage image1, QImage image2);
+
 #endif // FUNCTIONS_H

@@ -304,3 +304,15 @@ void MainWindow::on_equaliza_hist_clicked()
     }
 }
 
+
+void MainWindow::on_hist_matching_clicked()
+{
+    ui->msg_erro->setText("");
+    QPixmap tmp = ui->imagem_original->pixmap();
+    QImage image1 = tmp.toImage();
+    tmp = ui->imagem_copia->pixmap();
+    QImage image2 = tmp.toImage();
+    ui->imagem_copia->setPixmap(QPixmap::fromImage(matching_histograma(grayscale(image1), grayscale(image2))));
+
+}
+

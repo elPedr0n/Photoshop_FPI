@@ -375,5 +375,47 @@ QImage zoom_in(QImage image) {
     return temp;
 }
 
+QImage matching_histograma(QImage image1, QImage image2) {
+
+    vector<float> histSrc(256), histTgt(256), histCumSrc(256), histCumTgt(256), HM(256);
+    int alt1 = image1.height(), larg1 = image1.width(), alt2 = image2.height(), larg2 = image2.width();
+    float alpha1 = 255.0 / (alt1 * larg1), alpha2 = 255.0 / (alt2 * larg2);
+
+    histSrc = monta_histograma_gray(image1);
+    histTgt = monta_histograma_gray(image2);
+
+    histCumSrc[0] = alpha1 * (histSrc[0] * alt1 * larg1);
+    histCumTgt[0] = alpha2 * (histTgt[0] * alt2 * larg2);
+
+    for (int i = 1; i < 256; i++) {
+        histCumSrc[i] = histCumSrc[i-1] + alpha1 * (histSrc[i] * alt1 * larg1);
+        histCumTgt[i] = histCumTgt[i-1] + alpha2 * (histTgt[i] * alt2 * larg2);
+    }
+
+    for (int i = 0; i < 256; i++) {
+        float tg = histCumSrc[i];
+        int lvl = 0;
+        while(lvl < 256 && histCumTgt[lvl] < tg) lvl++;
+
+        HM[i] = min(lvl, 255);
+
+    }
+
+    for (int y = 0; y < alt1; ++y) {
+        for (int x = 0; x < larg1; ++x) {
+
+            QColor t = image1.pixelColor(x, y);
+            int valor = HM[t.red()];
+            image1.setPixelColor(x, y, qRgb(valor, valor, valor));
+
+        }
+    }
+
+
+
+    return image1;
+
+}
+
 
 

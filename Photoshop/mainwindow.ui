@@ -65,7 +65,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -209,8 +209,8 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>261</width>
-        <height>281</height>
+        <width>263</width>
+        <height>321</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -236,11 +236,35 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="hist_matching">
+         <property name="text">
+          <string>Matching de Histograma</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="zoom_in">
          <property name="text">
           <string>Zoom In</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QSpinBox" name="spinBox_2"/>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="Sy"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="zoom_out">
+           <property name="text">
+            <string>Zoom Out</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -295,23 +319,6 @@
          </item>
          <item>
           <widget class="QDoubleSpinBox" name="n_contraste"/>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QSpinBox" name="spinBox_2"/>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="Sy"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="zoom_out">
-           <property name="text">
-            <string>Zoom Out</string>
-           </property>
-          </widget>
          </item>
         </layout>
        </item>
@@ -452,6 +459,19 @@
       </property>
      </widget>
     </widget>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>10</y>
+      <width>1101</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Matching Source -&gt; HM source                                                                                                                            Matching target</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

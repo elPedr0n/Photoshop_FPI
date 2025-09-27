@@ -50,6 +50,8 @@ private slots:
 
     void on_equaliza_hist_clicked();
 
+    void on_hist_matching_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
