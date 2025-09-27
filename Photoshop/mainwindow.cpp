@@ -75,11 +75,11 @@ void MainWindow::on_grayscale_clicked()
     if (!copia && carregou) {
         QPixmap tmp = ui->imagem_original->pixmap();
         QImage image = tmp.toImage();
-        ui->imagem_original->setPixmap(QPixmap::fromImage(negativo(image)));
+        ui->imagem_original->setPixmap(QPixmap::fromImage(grayscale(image)));
     } else if (carregou) {
         QPixmap tmp = ui->imagem_copia->pixmap();
         QImage image = tmp.toImage();
-        ui->imagem_copia->setPixmap(QPixmap::fromImage(negativo(image)));
+        ui->imagem_copia->setPixmap(QPixmap::fromImage(grayscale(image)));
     } else {
         ui->msg_erro->setText("Nenhuma imagem foi carregada!!");
     }
@@ -92,11 +92,11 @@ void MainWindow::on_h_flip_clicked()
     if (!copia && carregou) {
         QPixmap tmp = ui->imagem_original->pixmap();
         QImage image = tmp.toImage();
-        ui->imagem_original->setPixmap(QPixmap::fromImage(rotate90CCW(image)));
+        ui->imagem_original->setPixmap(QPixmap::fromImage(horizontal_flip(image)));
     } else if (carregou) {
         QPixmap tmp = ui->imagem_copia->pixmap();
         QImage image = tmp.toImage();
-        ui->imagem_copia->setPixmap(QPixmap::fromImage(rotate90CCW(image)));
+        ui->imagem_copia->setPixmap(QPixmap::fromImage(horizontal_flip(image)));
     } else {
         ui->msg_erro->setText("Nenhuma imagem foi carregada!!");
     }
@@ -109,12 +109,12 @@ void MainWindow::on_v_flip_clicked()
     if (!copia && carregou) {
         QPixmap tmp = ui->imagem_original->pixmap();
         QImage image = tmp.toImage();
-        image = grayscale(image);
-        ui->imagem_original->setPixmap(QPixmap::fromImage(equalizacao_cinza(image)));
+        // image = grayscale(image);
+        ui->imagem_original->setPixmap(QPixmap::fromImage(vertical_flip(image)));
     } else if (carregou) {
         QPixmap tmp = ui->imagem_copia->pixmap();
         QImage image = tmp.toImage();
-        ui->imagem_copia->setPixmap(QPixmap::fromImage(rotate90CW(image)));
+        ui->imagem_copia->setPixmap(QPixmap::fromImage(vertical_flip(image)));
     } else {
         ui->msg_erro->setText("Nenhuma imagem foi carregada!!");
     }

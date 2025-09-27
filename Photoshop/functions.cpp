@@ -297,6 +297,56 @@ QImage equalizacao_cinza(QImage image) {
 }
 
 
+QRgb faz_media2(QColor c1, QColor c2) {
+
+    int r, g, b;
+    r = (c1.red() + c2.red()) / 2;
+    g = (c1.green() + c2.green()) / 2;
+    b = (c1.blue() + c2.blue()) / 2;
+
+
+    return qRgb(r, g, b);
+
+}
+
+
+
+QImage zoom_in(QImage image) {
+
+    int altura = image.height(), largura = image.width();
+    QImage temp(2 * largura, 2 * altura, QImage::Format_ARGB32_Premultiplied);
+
+
+    // montando as linhas
+    for (int y = 0; y < altura; ++y) {
+        for (int x = 0; x < 2 * largura; ++x) {
+
+            float src = x / 2.0;
+
+            if (x % 2 == 0) {
+                temp.setPixelColor(x, 2*y, image.pixelColor(floor(src), y));
+            } else {
+                if (ceil(src) >= largura)
+                    temp.setPixelColor(x, 2*y, faz_media2(image.pixelColor(floor(src), y), image.pixelColor(largura - 1, y)));
+                else
+                    temp.setPixelColor(x, 2*y, faz_media2(image.pixelColor(floor(src), y), image.pixelColor(ceil(src), y)));
+            }
+
+        }
+    }
+
+    // montando as colunas
+
+    for (int x = 0; x < 2 *  largura; ++x) {
+        for (int y = 1; y < 2 * altura; y+=2) {
+
+            temp.setPixelColor(x, y, faz_media2(temp.pixelColor(x, y-1), temp.pixelColor(x, min(y+1, 2*altura-1))));
+
+        }
+    }
+
+    return temp;
+}
 
 
 

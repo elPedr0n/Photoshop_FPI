@@ -27,4 +27,6 @@ QImage muda_brilho(QImage image, int n);
 
 QImage equalizacao_cinza(QImage image);
 
+QImage zoom_in(QImage image);
+
 #endif // FUNCTIONS_H

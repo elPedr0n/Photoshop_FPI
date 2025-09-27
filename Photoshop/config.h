@@ -8,6 +8,7 @@ using namespace std;
 #include <QImage>
 #include <QLabel>
 #include <QPixmap>
+#include <algorithm>
 #include <bits/stdc++.h>
 
 #define PATH "/Users/pedro/Documents/UFRGS/Semestre_4/FPI/Photoshop_FPI/images/"
