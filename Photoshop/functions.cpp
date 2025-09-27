@@ -296,6 +296,33 @@ QImage equalizacao_cinza(QImage image) {
     return image;
 }
 
+QImage equalizacao_colorida(QImage image) {
+
+    vector<float> hist(256), hist_cum(256);
+    int altura = image.height(), largura = image.width();
+    float alpha = 255.0 / (altura * largura);
+
+    hist = monta_histograma_gray(grayscale(image));
+    hist_cum[0] = alpha * (hist[0] * altura * largura);
+
+    for (int i = 1; i < 256; i++) {
+        hist_cum[i] = hist_cum[i-1] + alpha * (hist[i] * altura * largura);
+    }
+
+    for (int y = 0; y < altura; ++y) {
+        for (int x = 0; x < largura; ++x) {
+
+            QColor t = image.pixelColor(x, y);
+            int valorR = hist_cum[t.red()], valorG = hist_cum[t.green()], valorB = hist_cum[t.blue()];
+            image.setPixelColor(x, y, qRgb(valorR, valorG, valorB));
+
+        }
+    }
+
+
+    return image;
+}
+
 
 QRgb faz_media2(QColor c1, QColor c2) {
 

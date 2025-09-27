@@ -287,3 +287,20 @@ void MainWindow::on_mudar_contraste_clicked()
     }
 }
 
+
+void MainWindow::on_equaliza_hist_clicked()
+{
+    ui->msg_erro->setText("");
+    if (!copia && carregou) {
+        QPixmap tmp = ui->imagem_original->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_original->setPixmap(QPixmap::fromImage(equalizacao_colorida(image)));
+    } else if (carregou) {
+        QPixmap tmp = ui->imagem_copia->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_copia->setPixmap(QPixmap::fromImage(equalizacao_colorida(image)));
+    } else {
+        ui->msg_erro->setText("Nenhuma imagem foi carregada!!");
+    }
+}
+

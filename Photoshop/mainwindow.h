@@ -48,6 +48,8 @@ private slots:
 
     void on_mudar_contraste_clicked();
 
+    void on_equaliza_hist_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

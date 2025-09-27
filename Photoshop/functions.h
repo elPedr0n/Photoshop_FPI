@@ -29,6 +29,8 @@ QImage muda_contraste(QImage image, double n);
 
 QImage equalizacao_cinza(QImage image);
 
+QImage equalizacao_colorida(QImage image);
+
 QImage zoom_in(QImage image);
 
 #endif // FUNCTIONS_H
