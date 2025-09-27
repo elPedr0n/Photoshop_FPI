@@ -25,6 +25,8 @@ vector<vector<float>> monta_histograma_colorido(QImage image);
 
 QImage muda_brilho(QImage image, int n);
 
+QImage muda_contraste(QImage image, double n);
+
 QImage equalizacao_cinza(QImage image);
 
 QImage zoom_in(QImage image);

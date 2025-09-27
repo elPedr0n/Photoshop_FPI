@@ -36,6 +36,18 @@ private slots:
 
     void on_save_image_clicked();
 
+    void on_negativo_clicked();
+
+    void on_zoom_in_clicked();
+
+    void on_RCCW_clicked();
+
+    void on_RCW_clicked();
+
+    void on_mudar_brilho_clicked();
+
+    void on_mudar_contraste_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -231,7 +231,7 @@ QImage muda_brilho(QImage image, int n) {
 }
 
 
-QImage muda_contraste(QImage image, float n) { //Falta testar isso aq
+QImage muda_contraste(QImage image, double n) { //Falta testar isso aq
 
     int altura = image.height(), largura = image.width();
 

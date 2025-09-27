@@ -183,3 +183,107 @@ void MainWindow::on_save_image_clicked()
     }
 }
 
+
+void MainWindow::on_negativo_clicked()
+{
+    ui->msg_erro->setText("");
+    if (!copia && carregou) {
+        QPixmap tmp = ui->imagem_original->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_original->setPixmap(QPixmap::fromImage(negativo(image)));
+    } else if (carregou) {
+        QPixmap tmp = ui->imagem_copia->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_copia->setPixmap(QPixmap::fromImage(negativo(image)));
+    } else {
+        ui->msg_erro->setText("Nenhuma imagem foi carregada!!");
+    }
+}
+
+
+void MainWindow::on_zoom_in_clicked()
+{
+    ui->msg_erro->setText("");
+    if (!copia && carregou) {
+        QPixmap tmp = ui->imagem_original->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_original->setPixmap(QPixmap::fromImage(zoom_in(image)));
+    } else if (carregou) {
+        QPixmap tmp = ui->imagem_copia->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_copia->setPixmap(QPixmap::fromImage(zoom_in(image)));
+    } else {
+        ui->msg_erro->setText("Nenhuma imagem foi carregada!!");
+    }
+}
+
+
+void MainWindow::on_RCCW_clicked()
+{
+    ui->msg_erro->setText("");
+    if (!copia && carregou) {
+        QPixmap tmp = ui->imagem_original->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_original->setPixmap(QPixmap::fromImage(rotate90CCW(image)));
+    } else if (carregou) {
+        QPixmap tmp = ui->imagem_copia->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_copia->setPixmap(QPixmap::fromImage(rotate90CCW(image)));
+    } else {
+        ui->msg_erro->setText("Nenhuma imagem foi carregada!!");
+    }
+}
+
+
+void MainWindow::on_RCW_clicked()
+{
+    ui->msg_erro->setText("");
+    if (!copia && carregou) {
+        QPixmap tmp = ui->imagem_original->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_original->setPixmap(QPixmap::fromImage(rotate90CW(image)));
+    } else if (carregou) {
+        QPixmap tmp = ui->imagem_copia->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_copia->setPixmap(QPixmap::fromImage(rotate90CW(image)));
+    } else {
+        ui->msg_erro->setText("Nenhuma imagem foi carregada!!");
+    }
+}
+
+
+void MainWindow::on_mudar_brilho_clicked()
+{
+    ui->msg_erro->setText("");
+    int n = ui->n_brilho->value();
+    if (!copia && carregou) {
+        QPixmap tmp = ui->imagem_original->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_original->setPixmap(QPixmap::fromImage(muda_brilho(image, n)));
+    } else if (carregou) {
+        QPixmap tmp = ui->imagem_copia->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_copia->setPixmap(QPixmap::fromImage(muda_brilho(image, n)));
+    } else {
+        ui->msg_erro->setText("Nenhuma imagem foi carregada!!");
+    }
+}
+
+
+void MainWindow::on_mudar_contraste_clicked()
+{
+    ui->msg_erro->setText("");
+    double n = ui->n_contraste->value();
+    if (!copia && carregou) {
+        QPixmap tmp = ui->imagem_original->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_original->setPixmap(QPixmap::fromImage(muda_contraste(image, n)));
+    } else if (carregou) {
+        QPixmap tmp = ui->imagem_copia->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_copia->setPixmap(QPixmap::fromImage(muda_contraste(image, n)));
+    } else {
+        ui->msg_erro->setText("Nenhuma imagem foi carregada!!");
+    }
+}
+
