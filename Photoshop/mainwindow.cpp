@@ -2,6 +2,7 @@
 
 bool copia = false, carregou = false;
 int tons_original = 255, tons_copia = 255;
+vector<vector<double>> filter(3, vector<double>(3, 0));
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -312,7 +313,214 @@ void MainWindow::on_hist_matching_clicked()
     QImage image1 = tmp.toImage();
     tmp = ui->imagem_copia->pixmap();
     QImage image2 = tmp.toImage();
-    ui->imagem_copia->setPixmap(QPixmap::fromImage(matching_histograma(grayscale(image1), grayscale(image2))));
+    ui->imagem_original->setPixmap(QPixmap::fromImage(matching_histograma(grayscale(image1), grayscale(image2))));
 
+}
+
+
+void MainWindow::on_zoom_out_clicked()
+{
+    ui->msg_erro->setText("");
+    int sy = ui->Sy->value(), sx = ui->Sx->value();
+    if (!copia && carregou) {
+        QPixmap tmp = ui->imagem_original->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_original->setPixmap(QPixmap::fromImage(zoom_out(image, sx, sy)));
+    } else if (carregou) {
+        QPixmap tmp = ui->imagem_copia->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_copia->setPixmap(QPixmap::fromImage(equalizacao_colorida(image)));
+    } else {
+        ui->msg_erro->setText("Nenhuma imagem foi carregada!!");
+    }
+}
+
+
+
+
+
+void MainWindow::on_convoluir_clicked()
+{
+    if (!copia && carregou) {
+        QPixmap tmp = ui->imagem_original->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_original->setPixmap(QPixmap::fromImage(convolution(image, filter, false)));
+    } else if (carregou) {
+        QPixmap tmp = ui->imagem_copia->pixmap();
+        QImage image = tmp.toImage();
+        ui->imagem_copia->setPixmap(QPixmap::fromImage(convolution(image, filter, false)));
+    } else {
+        ui->msg_erro->setText("Nenhuma imagem foi carregada!!");
+    }
+
+
+}
+
+
+void MainWindow::on_gauss_clicked()
+{
+    filter[0][0] = 0.0625;
+    filter[0][1] = 0.125;
+    filter[0][2] = 0.0625;
+    filter[1][0] = 0.125;
+    filter[1][1] = 0.25;
+    filter[1][2] = 0.125;
+    filter[2][0] = 0.0625;
+    filter[2][1] = 0.125;
+    filter[2][2] = 0.0625;
+
+    ui->a00->setValue(0.0625);
+    ui->a01->setValue(0.125);
+    ui->a02->setValue(0.0625);
+    ui->a10->setValue(0.125);
+    ui->a11->setValue(0.25);
+    ui->a12->setValue(0.125);
+    ui->a20->setValue(0.0625);
+    ui->a21->setValue(0.125);
+    ui->a22->setValue(0.0625);
+}
+
+
+void MainWindow::on_Laplace_clicked()
+{
+    filter[0][0] = 0;
+    filter[0][1] = -1;
+    filter[0][2] = 0;
+    filter[1][0] = -1;
+    filter[1][1] = 4;
+    filter[1][2] = -1;
+    filter[2][0] = 0;
+    filter[2][1] = -1;
+    filter[2][2] = 0;
+
+    ui->a00->setValue(0.0);
+    ui->a01->setValue(-1);
+    ui->a02->setValue(0.0);
+    ui->a10->setValue(-1);
+    ui->a11->setValue(4);
+    ui->a12->setValue(-1);
+    ui->a20->setValue(0.0);
+    ui->a21->setValue(-1);
+    ui->a22->setValue(0.0);
+}
+
+
+void MainWindow::on_PAG_clicked()
+{
+    filter[0][0] = -1;
+    filter[0][1] = -1;
+    filter[0][2] = -1;
+    filter[1][0] = -1;
+    filter[1][1] = 8;
+    filter[1][2] = -1;
+    filter[2][0] = -1;
+    filter[2][1] = -1;
+    filter[2][2] = -1;
+
+    ui->a00->setValue(-1);
+    ui->a01->setValue(-1);
+    ui->a02->setValue(-1);
+    ui->a10->setValue(-1);
+    ui->a11->setValue(8);
+    ui->a12->setValue(-1);
+    ui->a20->setValue(-1);
+    ui->a21->setValue(-1);
+    ui->a22->setValue(-1);
+}
+
+
+void MainWindow::on_PHx_clicked()
+{
+    filter[0][0] = -1;
+    filter[0][1] = 0;
+    filter[0][2] = 1;
+    filter[1][0] = -1;
+    filter[1][1] = 0;
+    filter[1][2] = 1;
+    filter[2][0] = -1;
+    filter[2][1] = 0;
+    filter[2][2] = 1;
+
+    ui->a00->setValue(-1);
+    ui->a01->setValue(0);
+    ui->a02->setValue(1);
+    ui->a10->setValue(-1);
+    ui->a11->setValue(0);
+    ui->a12->setValue(1);
+    ui->a20->setValue(-1);
+    ui->a21->setValue(0);
+    ui->a22->setValue(1);
+}
+
+
+void MainWindow::on_PHy_clicked()
+{
+    filter[0][0] = -1;
+    filter[0][1] = -1;
+    filter[0][2] = -1;
+    filter[1][0] = 0;
+    filter[1][1] = 0;
+    filter[1][2] = 0;
+    filter[2][0] = 1;
+    filter[2][1] = 1;
+    filter[2][2] = 1;
+
+    ui->a00->setValue(-1);
+    ui->a01->setValue(-1);
+    ui->a02->setValue(-1);
+    ui->a10->setValue(0);
+    ui->a11->setValue(0);
+    ui->a12->setValue(0);
+    ui->a20->setValue(1);
+    ui->a21->setValue(1);
+    ui->a22->setValue(1);
+}
+
+
+void MainWindow::on_SHx_clicked()
+{
+    filter[0][0] = -1;
+    filter[0][1] = 0;
+    filter[0][2] = 1;
+    filter[1][0] = -2;
+    filter[1][1] = 0;
+    filter[1][2] = 2;
+    filter[2][0] = -1;
+    filter[2][1] = 0;
+    filter[2][2] = 1;
+
+    ui->a00->setValue(-1);
+    ui->a01->setValue(0);
+    ui->a02->setValue(1);
+    ui->a10->setValue(-2);
+    ui->a11->setValue(0);
+    ui->a12->setValue(2);
+    ui->a20->setValue(-1);
+    ui->a21->setValue(0);
+    ui->a22->setValue(1);
+}
+
+
+void MainWindow::on_XHy_clicked()
+{
+    filter[0][0] = -1;
+    filter[0][1] = -2;
+    filter[0][2] = -1;
+    filter[1][0] = 0;
+    filter[1][1] = 0;
+    filter[1][2] = 0;
+    filter[2][0] = 1;
+    filter[2][1] = 2;
+    filter[2][2] = 1;
+
+    ui->a00->setValue(-1);
+    ui->a01->setValue(-1);
+    ui->a02->setValue(-1);
+    ui->a10->setValue(0);
+    ui->a11->setValue(0);
+    ui->a12->setValue(0);
+    ui->a20->setValue(1);
+    ui->a21->setValue(1);
+    ui->a22->setValue(1);
 }
 

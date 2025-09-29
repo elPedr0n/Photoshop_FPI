@@ -35,4 +35,8 @@ QImage zoom_in(QImage image);
 
 QImage matching_histograma(QImage image1, QImage image2);
 
+QImage zoom_out(QImage image, int sx, int sy);
+
+QImage convolution(QImage image, vector<vector<double>> filter, bool soma);
+
 #endif // FUNCTIONS_H

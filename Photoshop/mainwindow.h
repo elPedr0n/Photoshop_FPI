@@ -52,6 +52,24 @@ private slots:
 
     void on_hist_matching_clicked();
 
+    void on_zoom_out_clicked();
+
+    void on_convoluir_clicked();
+
+    void on_gauss_clicked();
+
+    void on_Laplace_clicked();
+
+    void on_PAG_clicked();
+
+    void on_PHx_clicked();
+
+    void on_PHy_clicked();
+
+    void on_SHx_clicked();
+
+    void on_XHy_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

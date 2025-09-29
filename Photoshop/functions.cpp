@@ -375,6 +375,57 @@ QImage zoom_in(QImage image) {
     return temp;
 }
 
+QImage zoom_out(QImage image, int sx, int sy) {
+
+    int altura = image.height(), largura = image.width();
+    QImage temp(largura / sx, altura / sy, QImage::Format_ARGB32_Premultiplied);
+
+
+    for (int y = 0; y < altura / sy; ++y) {
+        for (int x = 0; x < largura / sx; ++x) {
+
+            int x_start = x * sx;
+            int y_start = y * sy;
+
+            int x_end = min(x_start + sx, largura);
+            int y_end = min(y_start + sy, altura);
+
+            int sumR = 0, sumG = 0, sumB = 0;
+            int contadorPixels = 0;
+
+            for (int y_orig = y_start; y_orig < y_end; ++y_orig)
+            {
+                for (int x_orig = x_start; x_orig < x_end; ++x_orig)
+                {
+                    QColor pixel = image.pixelColor(x_orig, y_orig);
+
+                    sumR += pixel.red();
+                    sumG += pixel.green();
+                    sumB += pixel.blue();
+                    contadorPixels++;
+                }
+            }
+
+            if (contadorPixels > 0)
+            {
+                sumR /= contadorPixels;
+                sumG /= contadorPixels;
+                sumB /= contadorPixels;
+
+                // Define o novo pixel na imagem reduzida.
+                // Usamos 255 para o Alpha (opacidade total).
+                temp.setPixel(x, y, qRgb(sumR, sumG, sumB));
+            }
+
+        }
+    }
+
+
+    return temp;
+}
+
+
+
 QImage matching_histograma(QImage image1, QImage image2) {
 
     vector<float> histSrc(256), histTgt(256), histCumSrc(256), histCumTgt(256), HM(256);
@@ -415,6 +466,46 @@ QImage matching_histograma(QImage image1, QImage image2) {
 
     return image1;
 
+}
+
+
+QImage convolution(QImage image, vector<vector<double>> filter, bool soma) {
+
+    int altura = image.height(), largura = image.width();
+    vector<int> index = {2, 1, 0}, map = {1, 0, -1};
+    QImage temp(largura, altura, QImage::Format_ARGB32_Premultiplied);
+    temp.fill(Qt::black);
+
+    for (int y = 1; y < altura - 1; ++y) {
+        for (int x = 1; x < largura - 1; ++x) {
+
+            double sumR = 0, sumG = 0, sumB = 0;
+            int novoR, novoB, novoG;
+
+            for (int linha = 0; linha < 3; linha++) {
+                for (int coluna = 0; coluna < 3; coluna++) {
+                    QColor t = image.pixelColor(x+map[linha], y+map[coluna]);
+                    sumR += t.red() * filter[index[linha]][index[coluna]];
+                    sumG += t.green() * filter[index[linha]][index[coluna]];
+                    sumB += t.blue() * filter[index[linha]][index[coluna]];
+                }
+            }
+
+            if (soma) {
+                novoR = qBound(0, qRound(sumR) + 127, 255);
+                novoG = qBound(0, qRound(sumG) + 127, 255);
+                novoB = qBound(0, qRound(sumB) + 127, 255);
+            } else {
+                novoR = qBound(0, qRound(sumR), 255);
+                novoG = qBound(0, qRound(sumG), 255);
+                novoB = qBound(0, qRound(sumB), 255);
+            }
+
+            temp.setPixelColor(x, y, qRgb(novoR, novoG, novoB));
+        }
+    }
+
+    return temp;
 }
 
 
